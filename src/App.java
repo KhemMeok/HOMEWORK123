@@ -1,5 +1,8 @@
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import model.Gender;
 import model.People;
 import model.Pet;
@@ -9,25 +12,28 @@ import service.PeopleServiceIMP;
 public class App {
     private final PeopleService peopleService = new PeopleServiceIMP();
     private final List<People> l_o_p = List.of(
-            new People("khem", Gender.Male, 21, List.of(Pet.COW)),
-            new People("khem", Gender.Female, 21, List.of(Pet.CAT, Pet.COW)),
-            new People("khem", Gender.Male, 21, List.of(Pet.CAT)),
-            new People("khem", Gender.Female, 21, List.of(Pet.CAT)),
-            new People("khem", Gender.Male, 21, List.of(Pet.DOG)),
-            new People("khem", Gender.Male, 21, List.of(Pet.CAT)),
+            new People("khem", Gender.Male, 17, List.of(Pet.COW)),
+            new People("khem", Gender.Female, 20, List.of(Pet.CAT, Pet.COW)),
+            new People("khem", Gender.Male, 23, List.of(Pet.CAT)),
+            new People("khem", Gender.Female, 19, List.of(Pet.CAT)),
+            new People("khem", Gender.Male, 32, List.of(Pet.DOG)),
+            new People("khem", Gender.Male, 22, List.of(Pet.CAT)),
             new People("khem", Gender.Female, 21, List.of(Pet.CAT)),
             new People("khem", Gender.Male, 21, List.of(Pet.FISH)),
-            new People("khem", Gender.Male, 21, List.of(Pet.CAT)),
+            new People("khem", Gender.Male, 28, List.of(Pet.CAT)),
             new People("khem1", Gender.Female, 17, List.of(Pet.BRID)));
 
     public static void main(String[] args) throws Exception {
         App app = new App();
-        app.showByGender();
-        app.showPeopleHavePetMoreThanOne();
-        app.showWhoHaveCat();
-        app.showPeopleLikeCatMost();
-        app.showPeoleNoPet();
-        app.showPeopleYoung();
+        // app.showByGender();
+        // app.showPeopleHavePetMoreThanOne();
+        // app.showWhoHaveCat();
+        // app.showPeopleLikeCatMost();
+        // app.showPeoleNoPet();
+        // app.showPeopleYoung();
+        app.showAllPet();
+        app.showGroupByAge();
+        app.showGroupByAgeUpperThan18();
 
     }
 
@@ -65,5 +71,35 @@ public class App {
         System.out.println("-----------------------------People Young Age-----------------------------");
         People yoengPeople = peopleService.yoengPeople(l_o_p);
         System.out.println(yoengPeople.getName());
+    }
+
+    public void showAllPet() {
+        System.out.println("-----------------------All Pet------------------------");
+        Set<Pet> findAppPets = peopleService.findAppPets(l_o_p);
+        System.out.println(findAppPets);
+    }
+    public void showGroupByAge(){
+        System.out.println("----------------------------Group By Age--------------------------");
+        Map<Integer, List<People>> groupByAge = peopleService.groupByAge(l_o_p);
+        groupByAge.forEach((k,v)->{
+        System.out.println(k);
+       // System.out.println(v.stream().map(p->p.getName()).collect(Collectors.toList()));
+       v.forEach((p)->{
+        System.out.println(p.getName()+":"+p.getAge());
+       });
+        });
+
+    }
+
+    public void showGroupByAgeUpperThan18(){
+        System.out.println("----------------------upper than 18---------------------");
+        Map<Boolean, List<People>> groupByAgeUpperThan18 = peopleService.groupByAgeUpperThan18(l_o_p, 18);
+        groupByAgeUpperThan18.forEach((k,v)->{
+            System.out.println(k);
+           // System.out.println(v.stream().map(p->p.getName()).collect(Collectors.toList()));
+           v.forEach((p)->{
+            System.out.println(p.getName()+":"+p.getAge());
+           });
+            });
     }
 }

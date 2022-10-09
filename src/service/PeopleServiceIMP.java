@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import model.Gender;
 import model.People;
@@ -60,6 +61,23 @@ public class PeopleServiceIMP implements PeopleService {
     @Override
     public People yoengPeople(List<People> list) {
         return list.stream().min((a, b) -> a.getAge() - b.getAge()).get();
+
+    }
+
+    @Override
+    public Set<Pet> findAppPets(List<People> list) {
+        return list.stream().flatMap(p -> p.getPet().stream()).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Map<Integer, List<People>> groupByAge(List<People> list) {
+        return list.stream().collect(Collectors.groupingBy(p -> p.getAge()));
+
+    }
+
+    @Override
+    public Map<Boolean, List<People>> groupByAgeUpperThan18(List<People> list, Integer age) {
+        return list.stream().collect(Collectors.partitioningBy(p -> p.getAge() > age));
 
     }
 

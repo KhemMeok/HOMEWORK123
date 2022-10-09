@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import model.Gender;
 import model.People;
 import model.Pet;
@@ -14,5 +14,9 @@ public interface PeopleService   {
     Gender mostHaveCat(List<People> list,Pet petType);
     boolean peopleNoPet(List<People> list);
     People yoengPeople(List<People> list);
+    Set<Pet> findAppPets(List<People> list);
+    Map<Integer,List<People>> groupByAge(List<People> list);
+    Map<Boolean,List<People>> groupByAgeUpperThan18(List<People> list,Integer age);
+
 
 }
