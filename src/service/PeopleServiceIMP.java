@@ -1,5 +1,6 @@
 package service;
 
+import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -78,6 +79,25 @@ public class PeopleServiceIMP implements PeopleService {
     @Override
     public Map<Boolean, List<People>> groupByAgeUpperThan18(List<People> list, Integer age) {
         return list.stream().collect(Collectors.partitioningBy(p -> p.getAge() > age));
+
+    }
+
+    @Override
+    public Map<Pet, List<String>> groupByPet(List<People> list) {
+        return list.stream().flatMap(p -> p.getPet().stream().map(pet -> new AbstractMap.SimpleEntry<>(pet, p)))
+                .collect(Collectors.groupingBy(entry -> entry.getKey(),
+                        Collectors.mapping(entry -> entry.getValue().getName(), Collectors.toList())));
+
+    }
+
+    @Override
+    public List<People> filterPeople(List<People> list) {
+        return list.stream()
+                .filter(p -> p.getPet().contains(Pet.CAT))
+                .filter(p -> !p.getPet().contains(Pet.DOG))
+                .filter(p -> p.getGender() == Gender.Female)
+                .filter(p -> p.getAge() >= 19 && p.getAge() <= 21)
+                .collect(Collectors.toList());
 
     }
 

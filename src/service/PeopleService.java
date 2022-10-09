@@ -17,6 +17,7 @@ public interface PeopleService   {
     Set<Pet> findAppPets(List<People> list);
     Map<Integer,List<People>> groupByAge(List<People> list);
     Map<Boolean,List<People>> groupByAgeUpperThan18(List<People> list,Integer age);
-
+    Map<Pet, List<String>> groupByPet(List<People> list);
+    List<People> filterPeople(List<People> list);
 
 }

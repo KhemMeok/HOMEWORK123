@@ -25,15 +25,17 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         App app = new App();
-        // app.showByGender();
-        // app.showPeopleHavePetMoreThanOne();
-        // app.showWhoHaveCat();
-        // app.showPeopleLikeCatMost();
-        // app.showPeoleNoPet();
-        // app.showPeopleYoung();
+        app.showByGender();
+        app.showPeopleHavePetMoreThanOne();
+        app.showWhoHaveCat();
+        app.showPeopleLikeCatMost();
+        app.showPeoleNoPet();
+        app.showPeopleYoung();
         app.showAllPet();
         app.showGroupByAge();
         app.showGroupByAgeUpperThan18();
+        app.showGroupByPet(); 
+        app.showfilter();
 
     }
 
@@ -78,28 +80,49 @@ public class App {
         Set<Pet> findAppPets = peopleService.findAppPets(l_o_p);
         System.out.println(findAppPets);
     }
-    public void showGroupByAge(){
+
+    public void showGroupByAge() {
         System.out.println("----------------------------Group By Age--------------------------");
         Map<Integer, List<People>> groupByAge = peopleService.groupByAge(l_o_p);
-        groupByAge.forEach((k,v)->{
-        System.out.println(k);
-       // System.out.println(v.stream().map(p->p.getName()).collect(Collectors.toList()));
-       v.forEach((p)->{
-        System.out.println(p.getName()+":"+p.getAge());
-       });
+        groupByAge.forEach((k, v) -> {
+            System.out.println(k);
+            // System.out.println(v.stream().map(p->p.getName()).collect(Collectors.toList()));
+            v.forEach((p) -> {
+                System.out.println(p.getName() + ":" + p.getAge());
+            });
         });
 
     }
 
-    public void showGroupByAgeUpperThan18(){
+    public void showGroupByAgeUpperThan18() {
         System.out.println("----------------------upper than 18---------------------");
         Map<Boolean, List<People>> groupByAgeUpperThan18 = peopleService.groupByAgeUpperThan18(l_o_p, 18);
-        groupByAgeUpperThan18.forEach((k,v)->{
+        groupByAgeUpperThan18.forEach((k, v) -> {
             System.out.println(k);
-           // System.out.println(v.stream().map(p->p.getName()).collect(Collectors.toList()));
-           v.forEach((p)->{
-            System.out.println(p.getName()+":"+p.getAge());
-           });
+            // System.out.println(v.stream().map(p->p.getName()).collect(Collectors.toList()));
+            v.forEach((p) -> {
+                System.out.println(p.getName() + ":" + p.getAge());
             });
+        });
+    }
+
+    public void showGroupByPet() {
+        System.out.println("----------------------Group By Pet---------------------");
+        Map<Pet, List<String>> groupByPet = peopleService.groupByPet(l_o_p);
+        groupByPet.forEach((k, v) -> {
+            System.out.println(k);
+            // System.out.println(v.stream().map(p->p.getName()).collect(Collectors.toList()));
+            v.forEach((p) -> {
+                System.out.println(p);
+            });
+        });
+    }
+
+    public void showfilter(){
+        System.out.println("-------------------------filter-------------------------------");
+        List<People> filterPeople = peopleService.filterPeople(l_o_p);
+        filterPeople.forEach((p)->{
+            System.out.println(p.getName());
+        });
     }
 }
